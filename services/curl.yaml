@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: curl
+  name: curl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: curl
+  template:
+    metadata:
+      labels:
+        run: curl
+    spec:
+      containers:
+      - image: radial/busyboxplus:curl
+        name: curl
+        command:
+        - sleep
+        - "3600"
