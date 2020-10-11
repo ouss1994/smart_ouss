@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    type: deployment
+  name: webapp-color
+  namespace: test
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      run: color
+  strategy:
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 2
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: color
+    spec:
+      containers:
+      - image: ohasni1994/webapp-color:3.0
+        name: webapp
+        env:
+        - name: APP_COLOR
+          value: blue
