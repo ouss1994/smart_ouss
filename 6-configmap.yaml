@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  DEMO_ENV: hello
+  PROD_ENV: salut
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: test

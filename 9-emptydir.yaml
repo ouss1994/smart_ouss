@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alpine
+  namespace: test
+spec:
+  selector:
+    matchLabels:
+      app: alpine
+  template:
+    metadata:
+      labels:
+        app: alpine
+    spec:
+      containers:
+      - name: alpine
+        image: alpine
+        command: ["/bin/sh", "-c", "echo 'hello world' > /etc/cache/test && sleep '3600'"]
+        volumeMounts:
+        - name: cache
+          mountPath: /etc/cache
+      - name: reader
+        image: k8s.gcr.io/busybox
+        volumeMounts:
+        - name: cache
+          mountPath: /etc/cache
+        command: ["/bin/sh", "-c", "cat /etc/cache/test && sleep '3600'"]
+      volumes:
+      - name: cache
+        emptyDir: {} 

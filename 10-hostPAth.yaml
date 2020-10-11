@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alpine
+  namespace: test
+spec:
+  selector:
+    matchLabels:
+      app: alpine
+  template:
+    metadata:
+      labels:
+        app: alpine
+    spec:
+      containers:
+      - name: alpine
+        image: alpine
+        command: ["/bin/sh", "-c", "ls /etc/tmp && sleep '3600'"]
+        volumeMounts:
+        - name: host
+          mountPath: /etc/tmp
+      volumes:
+      - name: host
+        hostPath:
+          path: /test
+          type: Directory 
